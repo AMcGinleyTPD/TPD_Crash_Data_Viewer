@@ -1,0 +1,19 @@
+{
+  "name": "utm_to_latlong",
+  "label": "UTM to Lat/Long Converter",
+  "type": "widget",
+  "version": "1.0.0",
+  "exbVersion": "1.18.0",
+  "author": "TPD",
+  "description": "Converts NAD83 UTM Zone 18N (Easting/Northing) to WGS84 Lat/Long. Upload a CSV, select X and Y columns, then download the converted file.",
+  "copyright": "",
+  "license": "",
+  "properties": {},
+  "translatedLocales": [
+    "en"
+  ],
+  "defaultSize": {
+    "width": 400,
+    "height": 520
+  }
+}

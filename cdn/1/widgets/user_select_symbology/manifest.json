@@ -1,0 +1,24 @@
+{
+  "name": "user_select_symbology",
+  "label": "User Select Symbology",
+  "type": "widget",
+  "version": "1.0.0",
+  "exbVersion": "1.18.0",
+  "author": "TPD",
+  "description": "Allows the Map User to set symbology (shape, color, size) of feature layers on the map. The Map Creator selects which map the widget interacts with.",
+  "copyright": "",
+  "license": "",
+  "properties": {
+    "useMapWidget": true
+  },
+  "dependency": [
+    "jimu-arcgis"
+  ],
+  "defaultSize": {
+    "width": 320,
+    "height": 400
+  },
+  "translatedLocales": [
+    "en"
+  ]
+}
