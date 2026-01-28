@@ -26,7 +26,7 @@
 				position: relative;
 				z-index: 0;
 				display: none;
-			}</style></head><body><div id="loading"><style>.loading-content{
+			}</style><script type="text/javascript" src="https://alcdn.msauth.net/browser/2.38.0/msal-browser.min.js"></script></head><body><div id="loading"><style>.loading-content{
           position: absolute;
           top: 0;
           bottom: 0;
@@ -117,4 +117,47 @@
 
 		"esri/": "https://API_URL/esri/"
 	}
-}</script><script src="./jimu-core/init.js"></script></body></html>
+}</script><script type="text/javascript">
+(function() {
+	var msalConfig = {
+		auth: {
+			clientId: "a6a02059-08a7-416c-a2f6-94b6ba7a11fe",
+			authority: "https://login.microsoftonline.com/c6baacb8-6185-4ebf-b80a-9d26b8800a3d",
+			redirectUri: window.location.origin + (window.location.pathname || "/")
+		},
+		cache: { cacheLocation: "sessionStorage", storeAuthStateInCookie: false }
+	};
+	var loginRequest = { scopes: ["User.Read"] };
+	function loadApp() {
+		var s = document.createElement("script");
+		s.src = "./jimu-core/init.js";
+		s.async = false;
+		document.body.appendChild(s);
+	}
+	if (typeof msal === "undefined") {
+		loadApp();
+		return;
+	}
+	var pca = new msal.PublicClientApplication({ auth: msalConfig.auth, cache: msalConfig.cache });
+	pca.initialize().then(function() {
+		return pca.handleRedirectPromise().then(function(response) {
+			if (response) return response;
+			var accounts = pca.getAllAccounts();
+			if (accounts.length > 0) {
+				return pca.acquireTokenSilent({ scopes: ["User.Read"], account: accounts[0] }).catch(function() { return null; });
+			}
+			return null;
+		});
+	}).then(function() {
+		var accounts = pca.getAllAccounts();
+		if (accounts.length > 0) {
+			loadApp();
+		} else {
+			pca.loginRedirect(loginRequest).catch(function(err) { console.error(err); loadApp(); });
+		}
+	}).catch(function(err) {
+		console.error("MSAL error", err);
+		loadApp();
+	});
+})();
+</script></body></html>
